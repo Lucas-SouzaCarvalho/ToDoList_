@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_app/pages/segunda_tela.dart';
+import 'package:to_do_app/provider/task_provider.dart';
 import 'package:to_do_app/util/todo_tile.dart';
 
 class PrimeiraTela extends StatefulWidget {
@@ -39,33 +41,29 @@ class _PrimeiraTelaState extends State<PrimeiraTela> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final result = await Navigator.push(
+        onPressed: () {
+          Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => TaskFormPage()),
           );
-
-          if (result != null && result is Map<String, dynamic>) {
-            setState(() {
-              toDoList.add([result['title'], false]);
-            });
-          }
         },
         child: Icon(
           Icons.add,
           color: Color(0XFF0085ff),
         ),
       ),
-      body: ListView.builder(
-        itemCount: toDoList.length,
-        itemBuilder: (context, index) {
-          return ToDoTile(
-            nomeTarefa: toDoList[index][0],
-            feito: toDoList[index][1],
-            onChanged: (value) => checkBoxChanged(value, index),
-            onDismissed: () => deleteTask(index),
-          );
-        },
+      body: Consumer<TaskProvider>(
+        builder: (context, TaskProvider provider, child) => ListView.builder(
+          itemCount: provider.toDoList.length,
+          itemBuilder: (context, index) {
+            return ToDoTile(
+              nomeTarefa: provider.toDoList.elementAt(index).title,
+              feito: provider.toDoList.elementAt(index).done,
+              onChanged: (value) {},
+              onDismissed: () {},
+            );
+          },
+        ),
       ),
     );
   }

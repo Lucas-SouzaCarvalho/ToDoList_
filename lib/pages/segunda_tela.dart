@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/model/task.dart';
+import 'package:to_do_app/provider/task_provider.dart';
 
 class TaskFormPage extends StatelessWidget {
   @override
@@ -73,7 +76,11 @@ class _TaskFormState extends State<TaskForm> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                _saveTask(context);
+                Task newTask = Task(
+                    title: _titleController.text, body: _bodyController.text);
+                Provider.of<TaskProvider>(context, listen: false)
+                    .addTask(newTask);
+                Navigator.of(context).pop();
               },
               child: Text('Save', style: TextStyle(color: Color(0XFF0085ff))),
             ),
