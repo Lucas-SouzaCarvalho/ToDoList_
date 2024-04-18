@@ -2,7 +2,9 @@
 Simple To Do List with flutter
 
 Initial Page, with and add button on the corner
-![image]img\image_01.png
+![image](img\image_01.png)
+![image](https://github.com/Lucas-SouzaCarvalho/ToDoList_/assets/115093132/5ac994c7-4ca2-45b7-b972-19c07647804b)
+
 
 After pressing button, second page opens up with form for adding tasks
 ![Alt text]img\image_02.png
