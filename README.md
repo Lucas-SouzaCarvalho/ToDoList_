@@ -2,11 +2,11 @@
 Simple To Do List with flutter
 
 Initial Page, with and add button on the corner
-img\image_01.png
+![image]img\image_01.png
 
 After pressing button, second page opens up with form for adding tasks
-img\image_02.png
-img\image_03.png
+![alt text]img\image_02.png
+![alttext]img\image_03.png
 
 Error Message when no Title is provided
 img\image_04.png
