@@ -5,8 +5,8 @@ Initial Page, with and add button on the corner
 ![image]img\image_01.png
 
 After pressing button, second page opens up with form for adding tasks
-![alt text]img\image_02.png
-![alttext]img\image_03.png
+![Alt text]img\image_02.png
+![Alttext]img\image_03.png
 
 Error Message when no Title is provided
 img\image_04.png
