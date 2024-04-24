@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/model/task.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/provider/task_provider.dart';
 
 class ToDoTile extends StatelessWidget {
-  final String nomeTarefa;
-  final bool feito;
-  final Function(bool?)? onChanged;
-  final Function()? onDismissed; // Callback para lidar com a remoção da tarefa
+  final Task task;
 
-  ToDoTile({
-    Key? key,
-    required this.nomeTarefa,
-    required this.feito,
-    required this.onChanged,
-    required this.onDismissed,
-  }) : super(key: key);
+  ToDoTile({required this.task});
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: UniqueKey(), // Chave única para cada item
-      direction: DismissDirection.endToStart, // Direção de arrasto para remover
-      onDismissed: (_) =>
-          onDismissed?.call(), // Chama a função de remoção quando arrastado
+      key: UniqueKey(),
+      direction: DismissDirection.endToStart,
+      onDismissed: (_) {
+        Provider.of<TaskProvider>(context, listen: false).deleteTask(task);
+      },
       background: Container(
         alignment: Alignment.centerRight,
         padding: EdgeInsets.only(right: 20),
@@ -38,13 +33,16 @@ class ToDoTile extends StatelessWidget {
             child: Row(
               children: [
                 Checkbox(
-                  value: feito,
-                  onChanged: onChanged,
+                  value: task.done,
+                  onChanged: (value) {
+                    Provider.of<TaskProvider>(context, listen: false)
+                        .toggleTaskCompletion(task);
+                  },
                   activeColor: Color(0XFF454545),
                 ),
-                Text(nomeTarefa,
+                Text(task.title,
                     style: TextStyle(
-                        decoration: feito
+                        decoration: task.done
                             ? TextDecoration.lineThrough
                             : TextDecoration.none,
                         decorationColor: Color(0XFF454545),

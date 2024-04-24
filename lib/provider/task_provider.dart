@@ -10,8 +10,21 @@ class TaskProvider with ChangeNotifier {
     _toDoList = value;
   }
 
-  addTask(Task task) {
+  void addTask(Task task) {
     _toDoList.add(task);
+    notifyListeners();
+  }
+
+  void toggleTaskCompletion(Task task) {
+    final index = _toDoList.indexOf(task);
+    if (index != -1) {
+      _toDoList[index].done = !_toDoList[index].done;
+      notifyListeners();
+    }
+  }
+
+  void deleteTask(Task task) {
+    _toDoList.remove(task);
     notifyListeners();
   }
 }

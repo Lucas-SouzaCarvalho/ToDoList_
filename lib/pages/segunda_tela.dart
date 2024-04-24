@@ -76,11 +76,7 @@ class _TaskFormState extends State<TaskForm> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                Task newTask = Task(
-                    title: _titleController.text, body: _bodyController.text);
-                Provider.of<TaskProvider>(context, listen: false)
-                    .addTask(newTask);
-                Navigator.of(context).pop();
+                _saveTask(context);
               },
               child: Text('Save', style: TextStyle(color: Color(0XFF0085ff))),
             ),
@@ -91,16 +87,20 @@ class _TaskFormState extends State<TaskForm> {
   }
 
   void _saveTask(BuildContext context) {
-    String title = _titleController.text;
-    String body = _bodyController.text;
+    String title = _titleController.text.trim();
+    String body = _bodyController.text.trim();
 
     if (title.isNotEmpty && body.isNotEmpty) {
-      Navigator.pop(context, {'title': title, 'body': body});
+      Task newTask = Task(title: title, body: body);
+      Provider.of<TaskProvider>(context, listen: false).addTask(newTask);
+      Navigator.of(context).pop();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please enter a title',
-              style: TextStyle(color: Colors.white)),
+          content: Text(
+            'Por favor não deixe campos em branco',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       );
     }

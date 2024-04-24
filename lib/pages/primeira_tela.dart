@@ -1,32 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:to_do_app/pages/segunda_tela.dart';
 import 'package:to_do_app/provider/task_provider.dart';
 import 'package:to_do_app/util/todo_tile.dart';
+import 'package:to_do_app/pages/segunda_tela.dart'; // Import the TaskFormPage
 
-class PrimeiraTela extends StatefulWidget {
-  const PrimeiraTela({Key? key}) : super(key: key);
-
-  @override
-  State<PrimeiraTela> createState() => _PrimeiraTelaState();
-}
-
-class _PrimeiraTelaState extends State<PrimeiraTela> {
-  List toDoList = [];
-
-  void checkBoxChanged(bool? value, int index) {
-    setState(() {
-      toDoList[index][1] = !toDoList[index][1];
-    });
-  }
-
-  void deleteTask(int index) {
-    setState(() {
-      toDoList.removeAt(index);
-    });
-  }
-
+class PrimeiraTela extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,17 +31,18 @@ class _PrimeiraTelaState extends State<PrimeiraTela> {
         ),
       ),
       body: Consumer<TaskProvider>(
-        builder: (context, TaskProvider provider, child) => ListView.builder(
-          itemCount: provider.toDoList.length,
-          itemBuilder: (context, index) {
-            return ToDoTile(
-              nomeTarefa: provider.toDoList.elementAt(index).title,
-              feito: provider.toDoList.elementAt(index).done,
-              onChanged: (value) {},
-              onDismissed: () {},
-            );
-          },
-        ),
+        builder: (context, taskProvider, child) {
+          final toDoList = taskProvider.toDoList;
+          return ListView.builder(
+            itemCount: toDoList.length,
+            itemBuilder: (context, index) {
+              final task = toDoList[index];
+              return ToDoTile(
+                task: task,
+              );
+            },
+          );
+        },
       ),
     );
   }
